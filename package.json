@@ -1,0 +1,58 @@
+{
+  "name": "react-zyuchen.com",
+  "version": "1.0.0",
+  "description": "这里是我的博客的 React 版本，博客的地址可见：[Yuchen 的主页](http://zyuchen.com/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShiningDan/react-zyuchen.com.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShiningDan/react-zyuchen.com/issues"
+  },
+  "homepage": "https://github.com/ShiningDan/react-zyuchen.com#readme",
+  "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "browser-sync": "^2.18.12",
+    "connect-mongo": "^1.3.2",
+    "cookie-parser": "^1.4.3",
+    "css-loader": "^0.28.4",
+    "css-mqpacker": "^6.0.1",
+    "cssnano": "^3.10.0",
+    "elasticsearch": "^13.0.1",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "file-loader": "^0.11.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-postcss": "^7.0.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "gulp-webp": "^2.3.0",
+    "imagemin-pngquant": "^5.0.1",
+    "mongoose": "^4.10.4",
+    "postcss-base64": "^0.6.1",
+    "postcss-import": "^10.0.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "redis": "^2.7.1",
+    "serve-favicon": "^2.4.3",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}
