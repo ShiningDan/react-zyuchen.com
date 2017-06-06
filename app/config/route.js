@@ -12,5 +12,6 @@ module.exports = function(app, redis, es) {
     next()
   }
 
-  app.get('/', Home.home);
+  app.get('/', Home.index);
+  app.get('/home', addRedis, Home.home);
 } 

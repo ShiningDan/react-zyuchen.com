@@ -43,6 +43,7 @@
     "gulp-util": "^3.0.8",
     "gulp-webp": "^2.3.0",
     "imagemin-pngquant": "^5.0.1",
+    "moment": "^2.18.1",
     "mongoose": "^4.10.4",
     "postcss-base64": "^0.6.1",
     "postcss-import": "^10.0.0",
@@ -53,6 +54,7 @@
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.8",
     "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "whatwg-fetch": "^2.0.3"
   }
 }

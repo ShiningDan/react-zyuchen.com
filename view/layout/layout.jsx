@@ -2,27 +2,31 @@ import React from 'react';
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import PageNav from '../page-nav/page-nav.jsx';
+import Home from '../home/home.jsx';
+import Archives from '../archives/archives.xjsx';
 import './layout.css';
+import 'whatwg-fetch';
 
 export default class Layout extends React.Component {
 
-  render() {
-    let pageNavPn = {
-      prev: "gt",
-      next: "lt",
-    };
+  constructor(props) {
+    super(props);
 
-    let pageNav = {
-      "prev": pageNavPn.prev === "" ? undefined : "上一页",
-      "next": pageNavPn.next === "" ? undefined : "下一页",
-      "center": "博客归档"
-    };
+    this.state = {
+      pageNav: null,
+      pageNavPn: null
+    }
+  }
+
+  render() {
     return (
       <div>
         <Header />
         <div id="content-wrap">
           <div id="content">
-            <PageNav pageNav={pageNav} pageNavPn={pageNavPn}/>
+            <Home />
+            {/*<Archives />*/}
+            <PageNav pageNav={this.state.pageNav} pageNavPn={this.state.pageNavPn}/>
           </div>
           <Footer />  
         </div>
