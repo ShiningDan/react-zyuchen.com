@@ -14,7 +14,7 @@ export default class Home extends React.Component {
 
 
   componentDidMount() {
-    fetch('/home').then((response) => response.json()
+    fetch('/home/').then((response) => response.json()
     ).then((response) => {
       this.setState({
         abstracts: this.state.abstracts.concat(response.abstracts),

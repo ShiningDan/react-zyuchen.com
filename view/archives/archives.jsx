@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+import './archives.css';
 
 export default class Archives extends React.Component {
 
@@ -8,6 +10,15 @@ export default class Archives extends React.Component {
     this.state = {
       articles: [],
     }
+  }
+  
+  componentDidMount() {
+    fetch('/archives/').then((response) => response.json()).
+    then((response) => {
+      this.setState({
+        articles: response.articles,
+      })
+    })
   }
 
   render() {
@@ -24,6 +35,7 @@ export default class Archives extends React.Component {
         <p>
           归档部分按照时间顺序展示文章，文章质量良莠不齐，既有想与大家分享的个人心得，也有平时学习未整理好的总结笔记，如果大家想选择性阅读一些文章，可以点击链接来 <a href="/series">专题</a> 查看。希望自己的在这个浮躁的时代坚持阅读与写作，也非常感谢大家的支持与反馈。
         </p>
+        <GenerateArch articles={this.state.articles}/>
       </div>
     ); 
   }
@@ -34,7 +46,7 @@ const GenerateToc = (props) => {
   for (let i = props.articles.length - 1; i >= 0; i--) {
     for (let j in props.articles[i]) {
       lis.push(
-        <li>
+        <li key={j}>
           <a href={"#toc-" + j}>{j} 年</a>
         </li>
       );
@@ -43,4 +55,38 @@ const GenerateToc = (props) => {
   return (
     <ul>{lis}</ul>
   );  
+}
+
+const GenerateArch = (props) => {
+  let tocs = [];
+  for (let i = props.articles.length - 1; i >= 0; i--) {
+    for (let j in props.articles[i]) {
+      let tocmonths = [];
+      for (let k = props.articles[i][j].length - 1; k>=0; k--) {
+        for (let l in props.articles[i][j][k]) {
+          tocmonths.push(
+            <div key={j+" " + l}>
+              <h2>{j} 年 {l} 月</h2>
+              <ul>
+                {
+                  props.articles[i][j][k][l].map(function(article) {
+                    return (
+                      <li key={article.link}>
+                        <a href={article.link}>{article.title}</a>
+                        <div className="time">{moment(article.date).format('MMM DD, YYYY')}</div>
+                      </li>
+                    );
+                  })
+                }
+              </ul>
+            </div>
+          );
+        }
+      }
+      tocs.push(<div name={"toc" + j} key={"toc" + j}>
+          {tocmonths}
+        </div>);
+    }
+  }
+  return (<div>{tocs}</div>);
 }
