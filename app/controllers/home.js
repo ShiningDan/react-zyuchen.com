@@ -2,6 +2,7 @@ let path = require('path');
 let Abstract = require('../models/abstract');
 let Article = require('../models/article');
 let Series = require('../models/series');
+let removeMd = require('remove-markdown');
 let homepageCount = 5;
 
 exports.index = function(req, res) {
@@ -115,6 +116,95 @@ exports.series = async function(req, res) {
     res.json({
       series: series,
     });
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+exports.search = async function(req, res) {
+  try {
+
+    let s = req.query.s;
+    let start = 0;
+    if (s) {
+      res.es.search({
+      index : 'articles',
+      type : 'article',
+      from : start,
+      body : {
+        query : { 
+          dis_max : { 
+            queries : [
+              {
+                match : {
+                  title : { 
+                    query : s, 
+                    minimum_should_match : '50%',
+                    boost : 4,
+                  }
+                } 
+              }, {
+                match : {
+                  content : { 
+                    query : s, 
+                    minimum_should_match : '75%',
+                    boost : 4,
+                  }
+                } 
+              }, {
+                match : {
+                  categories : { 
+                    query : s, 
+                    minimum_should_match : '100%',
+                    boost : 2,
+                  }
+                } 
+              }, {
+                match : {
+                  link : { 
+                    query : s, 
+                    minimum_should_match : '100%',
+                    boost : 1,
+                  }
+                } 
+              }
+            ],
+              tie_breaker : 0.3
+            }
+          },
+          highlight : {
+            pre_tags : ['<b>'],
+            post_tags : ['</b>'],
+            fields : {
+              title : {},
+              content : {},
+            }
+          }
+        }
+      }).then((value) => {
+        let reg = /b([\S]{1,20}?)\/b/g;
+        let moreReg = /!--more--/g;
+        value.hits.hits.map((a) => {
+          a.highlight.content = a.highlight.content.map((c) => {
+            c = removeMd(c);
+            c = c.replace(moreReg, () => "");
+            return c.replace(reg, (v, p1) => {
+              // console.log(v, p1);
+              return '<b>'+p1+'</b>';
+            })
+          });
+          
+          // console.log(a.highlight);
+          return a;
+        })
+        
+        res.json({
+          results: value.hits.hits,
+          info: value.hits.total,
+        })
+      });
+    }
+
   } catch(e) {
     console.log(e);
   }

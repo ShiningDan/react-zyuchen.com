@@ -50,6 +50,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "redis": "^2.7.1",
+    "remove-markdown": "^0.1.0",
     "serve-favicon": "^2.4.3",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.8",
