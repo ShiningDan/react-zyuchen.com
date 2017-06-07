@@ -89,3 +89,33 @@ exports.archives = async function(req, res) {
     console.log(e);
   }
 }
+
+exports.series = async function(req, res) {
+  try {
+    let redis = res.redis;
+    let series = await redis.lrangeAsync('series', 0, 100).then((values) => values.map((value) => {
+      let s = JSON.parse(value)
+      s.articles.map((a) => {
+        a.meta.createAt = new Date(a.meta.createAt); 
+        return a;
+      })
+      return s;
+    }));
+    if (series.length === 0) {
+      series = await Series.find({}).populate('articles', ['title', 'link', 'meta.createAt']);
+    }
+    // let series = await Series.find({}).populate('articles', ['title', 'link', 'meta.createAt']);
+
+    series.forEach(function(s) {
+      s.articles = s.articles.sort(function(a, b) {
+        return b.meta.createAt - a.meta.createAt;
+      });
+    });
+
+    res.json({
+      series: series,
+    });
+  } catch(e) {
+    console.log(e);
+  }
+}

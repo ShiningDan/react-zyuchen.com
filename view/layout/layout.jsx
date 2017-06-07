@@ -4,6 +4,7 @@ import Footer from '../footer/footer.jsx';
 import PageNav from '../page-nav/page-nav.jsx';
 import Home from '../home/home.jsx';
 import Archives from '../archives/archives.jsx';
+import Series from '../series/series.jsx';
 import './layout.css';
 import 'whatwg-fetch';
 
@@ -25,7 +26,8 @@ export default class Layout extends React.Component {
         <div id="content-wrap">
           <div id="content">
             {/*<Home />*/}
-            <Archives />
+            {/*<Archives />*/}
+            <Series />
             <PageNav pageNav={this.state.pageNav} pageNavPn={this.state.pageNavPn}/>
           </div>
           <Footer />  

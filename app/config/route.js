@@ -13,6 +13,7 @@ module.exports = function(app, redis, es) {
   }
 
   app.get('/', Home.index);
-  app.get('/home/', addRedis, Home.home);
-  app.get('/archives/', addRedis, Home.archives);
+  app.get('/home', addRedis, Home.home);
+  app.get('/archives', addRedis, Home.archives);
+  app.get('/series', addRedis, Home.series);
 } 
