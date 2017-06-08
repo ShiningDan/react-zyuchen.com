@@ -7,7 +7,7 @@ import Series from '../series/series.jsx';
 import Search from '../search/search.jsx';
 import Error from '../error/error.jsx';
 import Article from '../article/article.jsx';
-import { Router, Route, Switch, BrowserRouter} from 'react-router-dom';
+import { Router, Route, Switch, HashRouter} from 'react-router-dom';
 import './layout.css';
 import 'whatwg-fetch';
 
@@ -24,7 +24,7 @@ export default class Layout extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <HashRouter>
         <div>
           <Header />
           <div id="content-wrap">
@@ -41,7 +41,7 @@ export default class Layout extends React.Component {
             <Footer />  
           </div>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }

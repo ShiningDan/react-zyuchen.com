@@ -16,6 +16,7 @@ export default class article extends React.Component {
       series: null,
       pageNav: null,
       pageNavPn: null,
+      onscrollF: undefined,
     }
   }
 
@@ -30,7 +31,19 @@ export default class article extends React.Component {
           article: response.article,
           series: response.series,
           pageNav: response.pageNav,
-          pageNavPn: response.pageNavPn,
+          pageNavPn: response.pageNavPn
+        }, () => {
+          let images = document.getElementsByTagName('img');
+          // let comments = document.getElementById('comments');
+          // let lazyloadDOM = Array.from(images).concat(comments);
+          let lazyloadDOM = Array.from(images);
+          let lazyLoadF = this.onscorllF(lazyloadDOM);
+          this.setState({
+            onscorllF: lazyLoadF,
+          }, () => {
+            // document.addEventListener('scroll', this.state.onscrollF);
+            document.onscroll = lazyLoadF;
+          }) 
         })
       })
     }
@@ -48,9 +61,68 @@ export default class article extends React.Component {
           series: response.series,
           pageNav: response.pageNav,
           pageNavPn: response.pageNavPn,
+        }, () => {      
+          let images = document.getElementsByTagName('img');
+          // let comments = document.getElementById('comments');
+          // let lazyloadDOM = Array.from(images).concat(comments);
+          let lazyloadDOM = Array.from(images);
+          
+          let lazyLoadF = this.onscorllF(lazyloadDOM);
+          this.setState({
+            onscrollF: lazyLoadF,
+          }, () => {
+            // document.addEventListener('scroll', this.state.onscrollF);
+            document.onscroll = lazyLoadF;
+          })
         })
       })
     }
+  }
+
+
+  onscorllF(lazyloadDOM) {
+    return (event) => {
+      // should receive lazyloadDOM
+      let scrollTop = window.scrollY;
+      let innerHeight = window.innerHeight;
+      let scrollBottomHeight = scrollTop + innerHeight;
+      for (let i = 0; i < lazyloadDOM.length; i++) {
+        let dom = lazyloadDOM[i];
+        if (dom.offsetTop < scrollBottomHeight + 300) {
+          let src = dom.getAttribute('data-src');
+          if (src) {
+            dom.setAttribute('src', src);
+          }
+          let className = dom.getAttribute('class');
+          if (className) {
+            className += ' load';
+          }
+          else {
+            className = 'load';
+          }
+          dom.setAttribute('class', className);
+          lazyloadDOM.splice(i, 1);
+          i = 0;
+          if (lazyloadDOM.length === 0) {
+            // document.removeEventListener('scroll', this.state.onscrollF);
+            document.onscroll = null;
+          }
+        } else {
+          break;
+        }
+      }
+      if (lazyloadDOM.length === 0) {      
+        // document.removeEventListener('scroll', this.state.onscrollF);
+        document.onscroll = null;
+      }
+    };
+  };
+
+
+  componentWillMount() {
+    // console.log('unmount', this.state.onscrollF);
+    // document.removeEventListener('scroll', this.state.onscrollF);
+    document.onscroll = null;
   }
 
   render() {

@@ -27098,7 +27098,7 @@ var Layout = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _reactRouterDom.BrowserRouter,
+        _reactRouterDom.HashRouter,
         null,
         _react2.default.createElement(
           'div',
@@ -27448,7 +27448,8 @@ var article = function (_React$Component) {
       content: null,
       series: null,
       pageNav: null,
-      pageNavPn: null
+      pageNavPn: null,
+      onscrollF: undefined
     };
     return _this;
   }
@@ -27470,6 +27471,18 @@ var article = function (_React$Component) {
             series: response.series,
             pageNav: response.pageNav,
             pageNavPn: response.pageNavPn
+          }, function () {
+            var images = document.getElementsByTagName('img');
+            // let comments = document.getElementById('comments');
+            // let lazyloadDOM = Array.from(images).concat(comments);
+            var lazyloadDOM = Array.from(images);
+            var lazyLoadF = _this2.onscorllF(lazyloadDOM);
+            _this2.setState({
+              onscorllF: lazyLoadF
+            }, function () {
+              // document.addEventListener('scroll', this.state.onscrollF);
+              document.onscroll = lazyLoadF;
+            });
           });
         });
       }
@@ -27491,9 +27504,67 @@ var article = function (_React$Component) {
             series: response.series,
             pageNav: response.pageNav,
             pageNavPn: response.pageNavPn
+          }, function () {
+            var images = document.getElementsByTagName('img');
+            // let comments = document.getElementById('comments');
+            // let lazyloadDOM = Array.from(images).concat(comments);
+            var lazyloadDOM = Array.from(images);
+
+            var lazyLoadF = _this3.onscorllF(lazyloadDOM);
+            _this3.setState({
+              onscrollF: lazyLoadF
+            }, function () {
+              // document.addEventListener('scroll', this.state.onscrollF);
+              document.onscroll = lazyLoadF;
+            });
           });
         });
       }
+    }
+  }, {
+    key: 'onscorllF',
+    value: function onscorllF(lazyloadDOM) {
+      return function (event) {
+        // should receive lazyloadDOM
+        var scrollTop = window.scrollY;
+        var innerHeight = window.innerHeight;
+        var scrollBottomHeight = scrollTop + innerHeight;
+        for (var i = 0; i < lazyloadDOM.length; i++) {
+          var dom = lazyloadDOM[i];
+          if (dom.offsetTop < scrollBottomHeight + 300) {
+            var src = dom.getAttribute('data-src');
+            if (src) {
+              dom.setAttribute('src', src);
+            }
+            var className = dom.getAttribute('class');
+            if (className) {
+              className += ' load';
+            } else {
+              className = 'load';
+            }
+            dom.setAttribute('class', className);
+            lazyloadDOM.splice(i, 1);
+            i = 0;
+            if (lazyloadDOM.length === 0) {
+              // document.removeEventListener('scroll', this.state.onscrollF);
+              document.onscroll = null;
+            }
+          } else {
+            break;
+          }
+        }
+        if (lazyloadDOM.length === 0) {
+          // document.removeEventListener('scroll', this.state.onscrollF);
+          document.onscroll = null;
+        }
+      };
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      // console.log('unmount', this.state.onscrollF);
+      // document.removeEventListener('scroll', this.state.onscrollF);
+      document.onscroll = null;
     }
   }, {
     key: 'render',
