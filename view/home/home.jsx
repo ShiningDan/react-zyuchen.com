@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import {Link} from 'react-router-dom';
 import "./home.css";
 
 export default class Home extends React.Component {
@@ -14,7 +15,7 @@ export default class Home extends React.Component {
 
 
   componentDidMount() {
-    fetch('/home/').then((response) => response.json()
+    fetch('/api/home').then((response) => response.json()
     ).then((response) => {
       this.setState({
         abstracts: this.state.abstracts.concat(response.abstracts),
@@ -43,12 +44,12 @@ const GenerateAbstract = (props) => {
           <div className="comments">{props.abstract.comments}</div>
         </div>
         <h1 className="title">
-          <a href={props.abstract.link}>{props.abstract.title}</a>
+          <Link to={props.abstract.link}>{props.abstract.title}</Link>
         </h1>
         <div className="post-content">
           <p className="abstract">{props.abstract.abstract}</p>
           <p>
-            <a href={props.abstract.link}>继续阅读</a>
+            <Link to={props.abstract.link}>继续阅读</Link>
           </p>
         </div>
       </article>

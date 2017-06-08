@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import {Link} from 'react-router-dom';
 import './series.css';
 
 export default class Series extends React.Component {
@@ -12,7 +13,7 @@ export default class Series extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/series').then((Response) => Response.json()).
+    fetch('/api/series').then((Response) => Response.json()).
     then((response) => {
       this.setState({
         series: response.series,
@@ -22,7 +23,7 @@ export default class Series extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id='series'>
         <div id="toc">
           <header>年份列表</header>
           <ul>
@@ -54,7 +55,7 @@ const GenerateSeries = (props) => {
         <ul>
           {s.articles.map((article) => 
             <li key={article.link}>
-              <a href={article.link}>{article.title}</a>
+              <Link to={article.link}>{article.title}</Link>
               <div className="time">{moment(article.meta.createAt).format('MMM DD, YYYY')}</div>
             </li>
           )}

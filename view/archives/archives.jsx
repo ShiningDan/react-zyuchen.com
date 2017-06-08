@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import {Link} from 'react-router-dom'
 import './archives.css';
 
 export default class Archives extends React.Component {
@@ -13,7 +14,7 @@ export default class Archives extends React.Component {
   }
   
   componentDidMount() {
-    fetch('/archives/').then((response) => response.json()).
+    fetch('/api/archives').then((response) => response.json()).
     then((response) => {
       this.setState({
         articles: response.articles,
@@ -23,7 +24,7 @@ export default class Archives extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id='archives'>
         <div id="toc">
           <header>年份列表</header>
           <GenerateToc articles={this.state.articles}/>
@@ -72,7 +73,7 @@ const GenerateArch = (props) => {
                   props.articles[i][j][k][l].map(function(article) {
                     return (
                       <li key={article.link}>
-                        <a href={article.link}>{article.title}</a>
+                        <Link to={article.link}>{article.title}</Link>
                         <div className="time">{moment(article.date).format('MMM DD, YYYY')}</div>
                       </li>
                     );

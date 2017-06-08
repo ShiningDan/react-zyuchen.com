@@ -13,8 +13,9 @@ module.exports = function(app, redis, es) {
   }
 
   app.get('/', Home.index);
-  app.get('/home', addRedis, Home.home);
-  app.get('/archives', addRedis, Home.archives);
-  app.get('/series', addRedis, Home.series);
-  app.get('/search', addEs, Home.search);
+  app.get('/api/home', addRedis, Home.home);
+  app.get('/api/archives', addRedis, Home.archives);
+  app.get('/api/series', addRedis, Home.series);
+  app.get('/api/search', addEs, Home.search);
+  app.get('/api/post/:link', addRedis, Home.article);
 } 

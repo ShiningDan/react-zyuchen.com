@@ -1,0 +1,31 @@
+#article {color: #444; line-height: 1.6; word-wrap: break-word;}
+#article .load{height: auto!important;}
+#article h1 {color: #333; font-size: 2rem; font-weight: 400; line-height: 35px;}
+#article h2 {font-size: 1.6rem;}
+#article h3 {font-size: 1.4rem;}
+#article h4 {font-size: 1.1rem;}
+#article h5, #article h6 {font-size: 1.0rem;}
+#article ol, #article ul, #article dl {margin-left: 25px;}
+#article li {font-size: 96%;}
+#article p, #article h2, #article h3, #article h4, #article h5, #article h6, #article ol, #article ul, #article dl, #conent blockquote, #article pre  {margin-top: 15px;}
+#article a {color: #538ED5;}
+#article a:hover {text-decoration: underline;}
+#article pre {background-color: #f8f8f8; border-left: 5px solid #ccc; color: #666; font-size: 14px; line-height: 1.6; overflow: hidden; padding: 0.6rem; position: relative; white-space: pre-wrap; word-break: break-word; word-wrap: break-word;}
+#article code {background-color: #eee; border-radius: 5px;font-size: 90%; margin: 0 2px; padding: 2px 5px; vertical-align: middle;}
+#article pre code {background-color: transparent; border-radius: 0; font-size: 100%; margin: 0; padding: 0;}
+#article img {border: 1px solid #ccc; display: block; margin: 10px 5px; max-width: 96%;}
+#article .eof{margin-top: 20px;}
+#article .post-info {margin-top: 20px; font-size: 14px;}
+#article span.time {color: #999; margin: 0 4px;}
+#article .tag a{text-decoration: none;}
+#article .tag:after {content: '、';}
+#article .tag:last-child:after {content: '';}
+#article .series-info a {text-decoration: none;font-size: 14px;margin-left: 4px;}
+#article .series-ul .time {font-size: 14px;margin-left: 10px;}
+#article #comments {margin-top: 20px; padding-top: 20px; border-top: 1px solid #ccc;}
+#article #toc {float: right; border: 1px solid #ccc; padding: 10px; max-width: 260px; min-width: 120px; margin: 0 0 15px 20px;}
+#article #toc ul{margin-left: 14px;}
+#article #toc>header{text-align: center; border-bottom: 1px solid #ccc; margin: -6px 0 6px;}
+@media screen and (max-width: 640px) {
+    #article  #toc {float: none; box-sizing: 100%; max-width: 100%; margin: 0 0 20px;}
+}

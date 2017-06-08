@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink, } from 'react-router-dom';
 import "./header.css";
 
 export default class Header extends React.Component {
@@ -19,16 +20,16 @@ export default class Header extends React.Component {
         <nav id="main-nav">
           <ul>
             <li>
-              <a href="/">首页</a>
+              <NavLink to="/">首页</NavLink>
             </li>
             <li>
-              <a href="/archives/">归档</a>
+              <NavLink to="/archives">归档</NavLink>
             </li>
             <li>
-              <a href="/series/">专题</a>
+              <NavLink to="/series">专题</NavLink>
             </li>
             <li>
-              <a href="/search/">搜索</a>
+              <NavLink to="/search">搜索</NavLink>
             </li>
           </ul>
         </nav>

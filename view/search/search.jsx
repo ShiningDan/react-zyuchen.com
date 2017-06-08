@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './search.css';
 
 export default class Search extends React.Component {
@@ -16,7 +17,7 @@ export default class Search extends React.Component {
   onClickHandle(event) {
     event.preventDefault();
     let value = document.getElementById('keyword').value.split(' ').join('+');
-    fetch('/search?s=' + value).then((response) => response.json()).
+    fetch('/api/search?s=' + value).then((response) => response.json()).
     then((response) => {
       this.setState({
         results: response.results,
@@ -44,8 +45,8 @@ export default class Search extends React.Component {
               return (
                 <div className='searchItem' key={result._source.link}>
                   {result.highlight.title ? 
-                    <a href={"/post/" + result._source.link} className='searchTitle' dangerouslySetInnerHTML={{__html: result.highlight.title}} /> :
-                    <a href={"/post/" + result._source.link} className='searchTitle' dangerouslySetInnerHTML={{__html: result._source.title}} />}
+                    <Link to={"/post/" + result._source.link} className='searchTitle' dangerouslySetInnerHTML={{__html: result.highlight.title}} /> :
+                    <Link to={"/post/" + result._source.link} className='searchTitle' dangerouslySetInnerHTML={{__html: result._source.title}} />}
                   <div className='searchContent' dangerouslySetInnerHTML={{__html: result.highlight.content.join(' ... ')}} />
                 </div>
               );

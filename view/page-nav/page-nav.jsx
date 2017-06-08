@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './page-nav.css';
 
 export default class PageNav extends React.Component {
@@ -7,10 +8,10 @@ export default class PageNav extends React.Component {
     if (this.props.pageNav) {
       return (
         <nav id="page-nav">
-          <a href={this.props.pageNavPn.prev} className="prev">{this.props.pageNav.prev}</a>
-          <a href={this.props.pageNavPn.next} className="next">{this.props.pageNav.next}</a>
+          <Link to={this.props.pageNavPn.prev} className="prev">{this.props.pageNav.prev}</Link>
+          <Link to={this.props.pageNavPn.next} className="next">{this.props.pageNav.next}</Link>
           <div className="center">
-            <a href="/archives/">{this.props.pageNav.center}</a>
+            <Link to="/archives">{this.props.pageNav.center}</Link>
           </div>
         </nav>
       );

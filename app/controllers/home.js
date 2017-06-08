@@ -209,3 +209,76 @@ exports.search = async function(req, res) {
     console.log(e);
   }
 }
+
+exports.article = async function(req, res) {
+  try {
+    let acceptWebp = req.get('Accept').indexOf('image/webp') === -1 ? false : true,
+    link = '/post/' + req.params.link;
+    let redis = res.redis, article, articleNext, articlePrev, series, result, pageNavPn, pageNav;
+
+    acceptWebp = true;
+
+    let exists = await redis.hexistsAsync('articlesByLink', link);
+    if (exists) {
+      result = await redis.multi().hget('articlesByLink', link).lrange('abstracts', 0, 100).lrange('series', 0, 10).execAsync();
+      article = JSON.parse(result[0]);
+      abstracts = result[1].map((abstract) => JSON.parse(abstract));
+      let index;
+      for (let i = 0; i < abstracts.length; i++) {
+        if (abstracts[i].link === link) {
+          index = i
+        }
+      }
+      articleNext = index === result[1].length - 1 ? null : abstracts[index + 1];
+      articlePrev = index === 0 ? null : abstracts[index - 1];
+      for (let i = 0; i < result[2].length; i++) {
+        let s = JSON.parse(result[2][i])
+        if (s.name === article.series[0]) {
+          series = s;
+          break;
+        }
+      }
+      pageNavPn = {
+        prev: articlePrev !== null ? articlePrev.link : "",
+        next: articleNext !== null ? articleNext.link : "",
+      }
+      pageNav = {
+        "prev": pageNavPn.prev === "" ? undefined : articlePrev.title,
+        "next": pageNavPn.next === "" ? undefined : articleNext.title,
+        "center": ""
+      }
+    } else {
+      article = await Article.findOne({'link': link});
+      articleNext = Article.find({"_id": {"$gt": article._id}}).limit(1);
+      articlePrev = Article.find({"_id": {"$lt": article._id}}).sort({"_id": -1}).limit(1);
+      series = Series.findOne({name: article.series[0]}).limit(10).populate('articles', ['title', 'link', 'meta.createAt']);
+      [articleNext, articlePrev, series] = await Promise.all([articleNext, articlePrev, series]);
+      pageNavPn = {
+        prev: articlePrev.length === 1 ? articlePrev[0].link : "",
+        next: articleNext.length === 1 ? articleNext[0].link : "",
+      };
+      pageNav = {
+        "prev": pageNavPn.prev === "" ? undefined : articlePrev[0].title,
+        "next": pageNavPn.next === "" ? undefined : articleNext[0].title,
+        "center": ""
+      }
+    }
+    
+    // pageNav 中 prev 和 next 反了，需要进行替换
+    [pageNavPn.prev, pageNavPn.next] = [pageNavPn.next, pageNavPn.prev];
+    [pageNav.prev, pageNav.next] = [pageNav.next, pageNav.prev];
+    let content = acceptWebp === true ? article.contentWebp : article.content
+    delete article.content;
+    delete article.contentWebp;
+    res.json({
+      content: content,
+      article: article,
+      series: series,
+      pageNavPn: pageNavPn,
+      pageNav: pageNav,
+    })
+
+  } catch(e) {
+    console.log(e);
+  }
+}
