@@ -33,6 +33,7 @@ export default class article extends React.Component {
           pageNav: response.pageNav,
           pageNavPn: response.pageNavPn
         }, () => {
+          document.body.scrollTop = 0;
           let images = document.getElementsByTagName('img');
           // let comments = document.getElementById('comments');
           // let lazyloadDOM = Array.from(images).concat(comments);
