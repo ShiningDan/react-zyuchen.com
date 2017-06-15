@@ -4,7 +4,7 @@ import moment from 'moment';
 import {Link} from 'react-router-dom';
 import './article.css';
 
-export default class article extends React.Component {
+export default class article extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -137,38 +137,38 @@ export default class article extends React.Component {
   }
 }
 
-const GenerateArticle = (props) => {
-  if (props.article === null) {
+const GenerateArticle = ({article, content}) => {
+  if (article === null) {
     return null;
   } else {
     return (
       <div>
-        <div dangerouslySetInnerHTML={{__html: props.content}}></div>
+        <div dangerouslySetInnerHTML={{__html: content}}></div>
         <div className="eof">--EOF--</div>
         <div className="post-info">
           发表于 
-          <span className="time">{moment(props.article.meta.createAt).format('YYYY-MM-DD')}</span> 
-          并被添加「<span>{props.article.categories.map((cate, index) => {
+          <span className="time">{moment(article.meta.createAt).format('YYYY-MM-DD')}</span> 
+          并被添加「<span>{article.categories.map((cate, index) => {
             return (
               <span className="tag" key={cate}>
                 <Link to='/search'>{cate}</Link>
               </span>
             );
           })}</span>」标签，最后修改于
-          <span className="time">{moment(props.article.meta.updateAt).format('YYYY-MM-DD')}</span>
+          <span className="time">{moment(article.meta.updateAt).format('YYYY-MM-DD')}</span>
         </div>
       </div>
     );
   }
 }
 
-const GenerateSeries = (props) => {
-  if (props.series) {
+const GenerateSeries = ({series, article}) => {
+  if (series) {
     return (
       <div id="arti-series">
-        <h3 className="series-info">专题「{props.article.series[0]}」相关的其他文章 <Link to='/series' /> » </h3>
+        <h3 className="series-info">专题「{article.series[0]}」相关的其他文章 <Link to='/series' /> » </h3>
         <ul className="series-ul">
-          {props.series.articles.map((i)=> {
+          {series.articles.map((i)=> {
             return (
               <li key={i.title}>
                 <Link to={i.link}>{i.title}</Link>

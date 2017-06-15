@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import "./home.css";
 
-export default class Home extends React.Component {
+export default class Home extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -131,20 +131,20 @@ export default class Home extends React.Component {
   }
 }
 
-const GenerateAbstract = (props) => {
+const GenerateAbstract = ({abstract}) => {
   return (
     <article className="post">
         <div className="meta">
-          <div className="date">{moment(props.abstract.meta.createAt).format('YYYY-MM-DD')}</div>
-          <div className="comments">{props.abstract.comments}</div>
+          <div className="date">{moment(abstract.meta.createAt).format('YYYY-MM-DD')}</div>
+          <div className="comments">{abstract.comments}</div>
         </div>
         <h1 className="title">
-          <Link to={props.abstract.link}>{props.abstract.title}</Link>
+          <Link to={abstract.link}>{abstract.title}</Link>
         </h1>
         <div className="post-content">
-          <p className="abstract">{props.abstract.abstract}</p>
+          <p className="abstract">{abstract.abstract}</p>
           <p>
-            <Link to={props.abstract.link}>继续阅读</Link>
+            <Link to={abstract.link}>继续阅读</Link>
           </p>
         </div>
       </article>

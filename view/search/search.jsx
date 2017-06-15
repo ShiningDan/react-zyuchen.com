@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './search.css';
 
-export default class Search extends React.Component {
+export default class Search extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -12,6 +12,8 @@ export default class Search extends React.Component {
       keyword: undefined,
       results: [],
     }
+
+    this.onClickHandle = this.onClickHandle.bind(this);
   }
 
   onClickHandle(event) {
@@ -35,13 +37,21 @@ export default class Search extends React.Component {
             <div id="keyword-wrapper">
               <input type="search" id="keyword" maxLength='80' placeholder="请输入关键字..." name='s' required='true' />
             </div>
-            <input type="submit" id="submit" onClick={this.onClickHandle.bind(this)}/>
+            <input type="submit" id="submit" onClick={this.onClickHandle}/>
           </div>
         </div>
-        {this.state.results.length > 0 ? 
-          (<div id="searchResult">
-            <div id="searchInfo">本次搜索共找到结果 {this.state.info} 条</div>
-            {this.state.results.map((result) => {
+        <GenerateResult results={this.state.results} info={this.state.info} />
+      </div>
+    );
+  }
+}
+
+const GenerateResult = ({results, info}) => {
+
+  if (results.length > 0) {
+    return (<div id="searchResult">
+            <div id="searchInfo">本次搜索共找到结果 {info} 条</div>
+            {results.map((result) => {
               return (
                 <div className='searchItem' key={result._source.link}>
                   {result.highlight.title ? 
@@ -51,9 +61,8 @@ export default class Search extends React.Component {
                 </div>
               );
             })}
-          </div>) : null
-        }
-      </div>
-    );
+          </div>);
+  } else {
+    return null;
   }
 }

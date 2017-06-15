@@ -2,7 +2,12 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './page-nav.css';
 
-export default class PageNav extends React.Component {
+export default class PageNav extends React.PureComponent {
+
+  propTypes : {
+    pageNavPn: React.PropTypes.object,
+    pageNav: React.PropTypes.object,
+  }
 
   render() {
     if (this.props.pageNav) {

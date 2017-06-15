@@ -28752,8 +28752,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Archives = function (_React$Component) {
-  _inherits(Archives, _React$Component);
+var Archives = function (_React$PureComponent) {
+  _inherits(Archives, _React$PureComponent);
 
   function Archives(props) {
     _classCallCheck(this, Archives);
@@ -28785,16 +28785,7 @@ var Archives = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'archives' },
-        _react2.default.createElement(
-          'div',
-          { id: 'toc' },
-          _react2.default.createElement(
-            'header',
-            null,
-            '\u5E74\u4EFD\u5217\u8868'
-          ),
-          _react2.default.createElement(GenerateToc, { articles: this.state.articles })
-        ),
+        _react2.default.createElement(GenerateToc, { articles: this.state.articles }),
         _react2.default.createElement(
           'h1',
           null,
@@ -28840,15 +28831,17 @@ var Archives = function (_React$Component) {
   }]);
 
   return Archives;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = Archives;
 
 
-var GenerateToc = function GenerateToc(props) {
+var GenerateToc = function GenerateToc(_ref) {
+  var articles = _ref.articles;
+
   var lis = [];
-  for (var i = props.articles.length - 1; i >= 0; i--) {
-    for (var j in props.articles[i]) {
+  for (var i = articles.length - 1; i >= 0; i--) {
+    for (var j in articles[i]) {
       lis.push(_react2.default.createElement(
         'li',
         { key: j },
@@ -28862,19 +28855,30 @@ var GenerateToc = function GenerateToc(props) {
     }
   }
   return _react2.default.createElement(
-    'ul',
-    null,
-    lis
+    'div',
+    { id: 'toc' },
+    _react2.default.createElement(
+      'header',
+      null,
+      '\u5E74\u4EFD\u5217\u8868'
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      lis
+    )
   );
 };
 
-var GenerateArch = function GenerateArch(props) {
+var GenerateArch = function GenerateArch(_ref2) {
+  var articles = _ref2.articles;
+
   var tocs = [];
-  for (var i = props.articles.length - 1; i >= 0; i--) {
-    for (var j in props.articles[i]) {
+  for (var i = articles.length - 1; i >= 0; i--) {
+    for (var j in articles[i]) {
       var tocmonths = [];
-      for (var k = props.articles[i][j].length - 1; k >= 0; k--) {
-        for (var l in props.articles[i][j][k]) {
+      for (var k = articles[i][j].length - 1; k >= 0; k--) {
+        for (var l in articles[i][j][k]) {
           tocmonths.push(_react2.default.createElement(
             'div',
             { key: j + " " + l },
@@ -28889,7 +28893,7 @@ var GenerateArch = function GenerateArch(props) {
             _react2.default.createElement(
               'ul',
               null,
-              props.articles[i][j][k][l].map(function (article) {
+              articles[i][j][k][l].map(function (article) {
                 return _react2.default.createElement(
                   'li',
                   { key: article.link },
@@ -28960,8 +28964,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var article = function (_React$Component) {
-  _inherits(article, _React$Component);
+var article = function (_React$PureComponent) {
+  _inherits(article, _React$PureComponent);
 
   function article(props) {
     _classCallCheck(this, article);
@@ -29107,19 +29111,22 @@ var article = function (_React$Component) {
   }]);
 
   return article;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = article;
 
 
-var GenerateArticle = function GenerateArticle(props) {
-  if (props.article === null) {
+var GenerateArticle = function GenerateArticle(_ref) {
+  var article = _ref.article,
+      content = _ref.content;
+
+  if (article === null) {
     return null;
   } else {
     return _react2.default.createElement(
       'div',
       null,
-      _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: props.content } }),
+      _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: content } }),
       _react2.default.createElement(
         'div',
         { className: 'eof' },
@@ -29132,13 +29139,13 @@ var GenerateArticle = function GenerateArticle(props) {
         _react2.default.createElement(
           'span',
           { className: 'time' },
-          (0, _moment2.default)(props.article.meta.createAt).format('YYYY-MM-DD')
+          (0, _moment2.default)(article.meta.createAt).format('YYYY-MM-DD')
         ),
         '\u5E76\u88AB\u6DFB\u52A0\u300C',
         _react2.default.createElement(
           'span',
           null,
-          props.article.categories.map(function (cate, index) {
+          article.categories.map(function (cate, index) {
             return _react2.default.createElement(
               'span',
               { className: 'tag', key: cate },
@@ -29154,15 +29161,18 @@ var GenerateArticle = function GenerateArticle(props) {
         _react2.default.createElement(
           'span',
           { className: 'time' },
-          (0, _moment2.default)(props.article.meta.updateAt).format('YYYY-MM-DD')
+          (0, _moment2.default)(article.meta.updateAt).format('YYYY-MM-DD')
         )
       )
     );
   }
 };
 
-var GenerateSeries = function GenerateSeries(props) {
-  if (props.series) {
+var GenerateSeries = function GenerateSeries(_ref2) {
+  var series = _ref2.series,
+      article = _ref2.article;
+
+  if (series) {
     return _react2.default.createElement(
       'div',
       { id: 'arti-series' },
@@ -29170,7 +29180,7 @@ var GenerateSeries = function GenerateSeries(props) {
         'h3',
         { className: 'series-info' },
         '\u4E13\u9898\u300C',
-        props.article.series[0],
+        article.series[0],
         '\u300D\u76F8\u5173\u7684\u5176\u4ED6\u6587\u7AE0 ',
         _react2.default.createElement(_reactRouterDom.Link, { to: '/series' }),
         ' \xBB '
@@ -29178,7 +29188,7 @@ var GenerateSeries = function GenerateSeries(props) {
       _react2.default.createElement(
         'ul',
         { className: 'series-ul' },
-        props.series.articles.map(function (i) {
+        series.articles.map(function (i) {
           return _react2.default.createElement(
             'li',
             { key: i.title },
@@ -29500,8 +29510,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Home = function (_React$Component) {
-  _inherits(Home, _React$Component);
+var Home = function (_React$PureComponent) {
+  _inherits(Home, _React$PureComponent);
 
   function Home(props) {
     _classCallCheck(this, Home);
@@ -29642,12 +29652,14 @@ var Home = function (_React$Component) {
   }]);
 
   return Home;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = Home;
 
 
-var GenerateAbstract = function GenerateAbstract(props) {
+var GenerateAbstract = function GenerateAbstract(_ref) {
+  var abstract = _ref.abstract;
+
   return _react2.default.createElement(
     'article',
     { className: 'post' },
@@ -29657,12 +29669,12 @@ var GenerateAbstract = function GenerateAbstract(props) {
       _react2.default.createElement(
         'div',
         { className: 'date' },
-        (0, _moment2.default)(props.abstract.meta.createAt).format('YYYY-MM-DD')
+        (0, _moment2.default)(abstract.meta.createAt).format('YYYY-MM-DD')
       ),
       _react2.default.createElement(
         'div',
         { className: 'comments' },
-        props.abstract.comments
+        abstract.comments
       )
     ),
     _react2.default.createElement(
@@ -29670,8 +29682,8 @@ var GenerateAbstract = function GenerateAbstract(props) {
       { className: 'title' },
       _react2.default.createElement(
         _reactRouterDom.Link,
-        { to: props.abstract.link },
-        props.abstract.title
+        { to: abstract.link },
+        abstract.title
       )
     ),
     _react2.default.createElement(
@@ -29680,14 +29692,14 @@ var GenerateAbstract = function GenerateAbstract(props) {
       _react2.default.createElement(
         'p',
         { className: 'abstract' },
-        props.abstract.abstract
+        abstract.abstract
       ),
       _react2.default.createElement(
         'p',
         null,
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: props.abstract.link },
+          { to: abstract.link },
           '\u7EE7\u7EED\u9605\u8BFB'
         )
       )
@@ -29724,8 +29736,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PageNav = function (_React$Component) {
-  _inherits(PageNav, _React$Component);
+var PageNav = function (_React$PureComponent) {
+  _inherits(PageNav, _React$PureComponent);
 
   function PageNav() {
     _classCallCheck(this, PageNav);
@@ -29767,7 +29779,7 @@ var PageNav = function (_React$Component) {
   }]);
 
   return PageNav;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = PageNav;
 
@@ -29800,8 +29812,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Search = function (_React$Component) {
-  _inherits(Search, _React$Component);
+var Search = function (_React$PureComponent) {
+  _inherits(Search, _React$PureComponent);
 
   function Search(props) {
     _classCallCheck(this, Search);
@@ -29813,6 +29825,8 @@ var Search = function (_React$Component) {
       keyword: undefined,
       results: []
     };
+
+    _this.onClickHandle = _this.onClickHandle.bind(_this);
     return _this;
   }
 
@@ -29854,36 +29868,49 @@ var Search = function (_React$Component) {
               { id: 'keyword-wrapper' },
               _react2.default.createElement('input', { type: 'search', id: 'keyword', maxLength: '80', placeholder: '\u8BF7\u8F93\u5165\u5173\u952E\u5B57...', name: 's', required: 'true' })
             ),
-            _react2.default.createElement('input', { type: 'submit', id: 'submit', onClick: this.onClickHandle.bind(this) })
+            _react2.default.createElement('input', { type: 'submit', id: 'submit', onClick: this.onClickHandle })
           )
         ),
-        this.state.results.length > 0 ? _react2.default.createElement(
-          'div',
-          { id: 'searchResult' },
-          _react2.default.createElement(
-            'div',
-            { id: 'searchInfo' },
-            '\u672C\u6B21\u641C\u7D22\u5171\u627E\u5230\u7ED3\u679C ',
-            this.state.info,
-            ' \u6761'
-          ),
-          this.state.results.map(function (result) {
-            return _react2.default.createElement(
-              'div',
-              { className: 'searchItem', key: result._source.link },
-              result.highlight.title ? _react2.default.createElement(_reactRouterDom.Link, { to: "/post/" + result._source.link, className: 'searchTitle', dangerouslySetInnerHTML: { __html: result.highlight.title } }) : _react2.default.createElement(_reactRouterDom.Link, { to: "/post/" + result._source.link, className: 'searchTitle', dangerouslySetInnerHTML: { __html: result._source.title } }),
-              _react2.default.createElement('div', { className: 'searchContent', dangerouslySetInnerHTML: { __html: result.highlight.content.join(' ... ') } })
-            );
-          })
-        ) : null
+        _react2.default.createElement(GenerateResult, { results: this.state.results, info: this.state.info })
       );
     }
   }]);
 
   return Search;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = Search;
+
+
+var GenerateResult = function GenerateResult(_ref) {
+  var results = _ref.results,
+      info = _ref.info;
+
+
+  if (results.length > 0) {
+    return _react2.default.createElement(
+      'div',
+      { id: 'searchResult' },
+      _react2.default.createElement(
+        'div',
+        { id: 'searchInfo' },
+        '\u672C\u6B21\u641C\u7D22\u5171\u627E\u5230\u7ED3\u679C ',
+        info,
+        ' \u6761'
+      ),
+      results.map(function (result) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'searchItem', key: result._source.link },
+          result.highlight.title ? _react2.default.createElement(_reactRouterDom.Link, { to: "/post/" + result._source.link, className: 'searchTitle', dangerouslySetInnerHTML: { __html: result.highlight.title } }) : _react2.default.createElement(_reactRouterDom.Link, { to: "/post/" + result._source.link, className: 'searchTitle', dangerouslySetInnerHTML: { __html: result._source.title } }),
+          _react2.default.createElement('div', { className: 'searchContent', dangerouslySetInnerHTML: { __html: result.highlight.content.join(' ... ') } })
+        );
+      })
+    );
+  } else {
+    return null;
+  }
+};
 
 /***/ }),
 /* 249 */
@@ -29918,8 +29945,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Series = function (_React$Component) {
-  _inherits(Series, _React$Component);
+var Series = function (_React$PureComponent) {
+  _inherits(Series, _React$PureComponent);
 
   function Series(props) {
     _classCallCheck(this, Series);
@@ -29951,30 +29978,7 @@ var Series = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'series' },
-        _react2.default.createElement(
-          'div',
-          { id: 'toc' },
-          _react2.default.createElement(
-            'header',
-            null,
-            '\u5E74\u4EFD\u5217\u8868'
-          ),
-          _react2.default.createElement(
-            'ul',
-            null,
-            this.state.series.map(function (s, index) {
-              return _react2.default.createElement(
-                'li',
-                { key: "#toc" + index },
-                _react2.default.createElement(
-                  'a',
-                  { href: "#toc" + index },
-                  s.name
-                )
-              );
-            })
-          )
-        ),
+        _react2.default.createElement(GenerateToc, { series: this.state.series }),
         _react2.default.createElement(
           'h1',
           null,
@@ -29983,28 +29987,30 @@ var Series = function (_React$Component) {
         _react2.default.createElement(
           'p',
           null,
-          '\u8FD9\u91CC\u662F\u535A\u5BA2\u7684\u4E13\u9898\u90E8\u5206\uFF0C\u5C06\u7B14\u8005\u5E73\u65F6\u7684\u603B\u7ED3\u6587\u7AE0\u6309\u7167\u4E13\u9898\u8FDB\u884C\u5982\u4E0B\u7684\u533A\u5206\u3002\u4F46\u662F\u4E13\u9898\u90E8\u5206\u4E2D\u6536\u5F55\u7684\u5E76\u4E0D\u662F\u6240\u6709\u7684\u6587\u7AE0\uFF0C\u5982\u679C\u60F3\u67E5\u770B\u6240\u6709\u7684\u6587\u7AE0\uFF0C\u53EF\u4EE5\u70B9\u51FB ',
+          '\u8FD9\u91CC\u662F\u535A\u5BA2\u7684\u4E13\u9898\u90E8\u5206\uFF0C\u5C06\u7B14\u8005\u5E73\u65F6\u7684\u603B\u7ED3\u6587\u7AE0\u6309\u7167\u4E13\u9898\u8FDB\u884C\u5982\u4E0B\u7684\u533A\u5206\u3002\u4F46\u662F\u4E13\u9898\u90E8\u5206\u4E2D\u6536\u5F55\u7684\u5E76\u4E0D\u662F\u6240\u6709\u7684\u6587\u7AE0\uFF0C\u5982\u679C\u60F3\u67E5\u770B\u6240\u6709\u7684\u6587\u7AE0\uFF0C\u53EF\u4EE5\u70B9\u51FB',
           _react2.default.createElement(
-            'a',
-            { href: '/archives' },
-            '\u5F52\u6863'
+            _reactRouterDom.Link,
+            { to: '/archives' },
+            ' \u5F52\u6863 '
           ),
-          ' \u6309\u7167\u65F6\u95F4\u987A\u5E8F\u6D4F\u89C8\u3002',
-          _react2.default.createElement(GenerateSeries, { series: this.state.series })
-        )
+          '\u6309\u7167\u65F6\u95F4\u987A\u5E8F\u6D4F\u89C8\u3002'
+        ),
+        _react2.default.createElement(GenerateSeries, { serieses: this.state.series })
       );
     }
   }]);
 
   return Series;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = Series;
 
 
-var GenerateSeries = function GenerateSeries(props) {
+var GenerateSeries = function GenerateSeries(_ref) {
+  var serieses = _ref.serieses;
+
   var series = [];
-  props.series.forEach(function (s, index) {
+  serieses.forEach(function (s, index) {
     series.push(_react2.default.createElement(
       'div',
       { key: "toc-" + index },
@@ -30039,6 +30045,35 @@ var GenerateSeries = function GenerateSeries(props) {
     'div',
     null,
     series
+  );
+};
+
+var GenerateToc = function GenerateToc(_ref2) {
+  var series = _ref2.series;
+
+  return _react2.default.createElement(
+    'div',
+    { id: 'toc' },
+    _react2.default.createElement(
+      'header',
+      null,
+      '\u5E74\u4EFD\u5217\u8868'
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      series.map(function (s, index) {
+        return _react2.default.createElement(
+          'li',
+          { key: "#toc" + index },
+          _react2.default.createElement(
+            'a',
+            { href: "#toc" + index },
+            s.name
+          )
+        );
+      })
+    )
   );
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 import './archives.css';
 
-export default class Archives extends React.Component {
+export default class Archives extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -25,10 +25,7 @@ export default class Archives extends React.Component {
   render() {
     return (
       <div id='archives'>
-        <div id="toc">
-          <header>年份列表</header>
-          <GenerateToc articles={this.state.articles}/>
-        </div>
+        <GenerateToc articles={this.state.articles}/>
         <h1>归档</h1>
         <p>
           本博客系统是自己搭建的博客系统，后台系统用的是 <a href="http://expressjs.com/">Express JS</a>，前端的样式参考了 <a href="https://imququ.com/">屈屈老师的博客</a>。除了文章展示页面以外，还有后台页面管理系统，文章统计，搜索等辅助功能。之前使用 <a href="https://hexo.io/">Hexo</a> 作为博客系统，上面保留一些原来的博客文章，有一些不重要的就没有迁移过来了。
@@ -42,10 +39,10 @@ export default class Archives extends React.Component {
   }
 }
 
-const GenerateToc = (props) => {
+const GenerateToc = ({articles}) => {
   let lis = [];
-  for (let i = props.articles.length - 1; i >= 0; i--) {
-    for (let j in props.articles[i]) {
+  for (let i = articles.length - 1; i >= 0; i--) {
+    for (let j in articles[i]) {
       lis.push(
         <li key={j}>
           <a href={"#toc-" + j}>{j} 年</a>
@@ -54,23 +51,26 @@ const GenerateToc = (props) => {
     }
   }
   return (
-    <ul>{lis}</ul>
+    <div id="toc">
+      <header>年份列表</header>
+      <ul>{lis}</ul>
+    </div>
   );  
 }
 
-const GenerateArch = (props) => {
+const GenerateArch = ({articles}) => {
   let tocs = [];
-  for (let i = props.articles.length - 1; i >= 0; i--) {
-    for (let j in props.articles[i]) {
+  for (let i = articles.length - 1; i >= 0; i--) {
+    for (let j in articles[i]) {
       let tocmonths = [];
-      for (let k = props.articles[i][j].length - 1; k>=0; k--) {
-        for (let l in props.articles[i][j][k]) {
+      for (let k = articles[i][j].length - 1; k>=0; k--) {
+        for (let l in articles[i][j][k]) {
           tocmonths.push(
             <div key={j+" " + l}>
               <h2>{j} 年 {l} 月</h2>
               <ul>
                 {
-                  props.articles[i][j][k][l].map(function(article) {
+                  articles[i][j][k][l].map(function(article) {
                     return (
                       <li key={article.link}>
                         <Link to={article.link}>{article.title}</Link>
