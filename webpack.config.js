@@ -1,11 +1,23 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'app/web/entry.jsx'),
+  entry: {
+    bundle: path.resolve(__dirname, 'app/web/entry.jsx'),
+    vendor: ['react', 'react-router-dom', 'moment', 'axios', 'whatwg-fetch'],
+  },
   output: {
     path: path.resolve(__dirname, 'www/static/js'),
-    filename: 'bundle.js'
+    filename: '[name].js',
+    chunkFilename: '[name].[chunkhash:5].js',
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor'],
+      filename: 'vendor.js',
+      minChucks: Infinity,
+    })
+  ],
   module: {
     loaders: [
     {
@@ -13,7 +25,7 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel-loader',
       query: {
-        presets: ['es2015','react']
+        presets: ['es2015','react', 'stage-3']
       }
     },
     {
