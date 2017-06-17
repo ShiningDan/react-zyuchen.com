@@ -4,12 +4,14 @@ var webpack = require('webpack');
 module.exports = {
   entry: {
     bundle: path.resolve(__dirname, 'app/web/entry.jsx'),
+    // archives: path.resolve(__dirname, 'view/archives/archives.jsx'),
     vendor: ['react', 'react-router-dom', 'moment', 'axios', 'whatwg-fetch'],
   },
   output: {
     path: path.resolve(__dirname, 'www/static/js'),
     filename: '[name].js',
-    chunkFilename: '[name].[chunkhash:5].js',
+    publicPath: 'js/',
+    chunkFilename: '[name].[chunkhash:5].chunk.js',
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({

@@ -75,6 +75,24 @@ export default class article extends React.PureComponent {
             // document.addEventListener('scroll', this.state.onscrollF);
             document.onscroll = lazyLoadF;
           })
+
+
+          // add toc redirect solution
+          let tocA = document.getElementById('toc').getElementsByTagName('a');
+          for (let i = 0; i < tocA.length; i++) {
+            tocA.item(i).addEventListener('click', (event) => {
+              event.preventDefault();
+            })
+          }
+          document.getElementById('toc').addEventListener('click', (event) => {
+            if (event.target.tagName.toLowerCase() === 'a') {
+              let id = event.target.getAttribute('href').slice(1);
+              let toElem = document.getElementById(id);
+              if (toElem) {
+                toElem.scrollIntoView();
+              }
+            }
+          })
         })
       })
     }
