@@ -11,4 +11,4 @@ class HelloWorld extends React.Component {
   }
 }
 
-ReactDOM.render(<HelloWorld />, document.body);
+ReactDOM.render(<HelloWorld />, document.getElementById('entry'));

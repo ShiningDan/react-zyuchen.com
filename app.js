@@ -36,6 +36,9 @@ let esClient = new elasticsearch.Client({
 
 let app = express();
 
+app.set('views', './view')                // 设置视图的目录
+app.set('view engine', 'pug');             // 设置视图的引擎
+
 app.use(express.static(path.join(__dirname, './www/static'), {
   maxAge: '365d',
 })); // 将 ./www/static 添加到静态资源目录中

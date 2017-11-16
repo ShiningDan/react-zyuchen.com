@@ -1,5 +1,5 @@
 let Home = require('../controllers/home');
-
+let Cookie = require('../controllers/cookie');
 
 module.exports = function(app, redis, es) {
   function addRedis(req, res, next) {
@@ -12,7 +12,7 @@ module.exports = function(app, redis, es) {
     next()
   }
 
-  app.get('/', Home.index);
+  app.get('/', Cookie.checkll, Home.index);
   app.get('/api/home', addRedis, Home.home);
   app.get('/api/archives', addRedis, Home.archives);
   app.get('/api/series', addRedis, Home.series);

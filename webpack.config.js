@@ -11,13 +11,18 @@ module.exports = {
     path: path.resolve(__dirname, 'www/static/js'),
     filename: '[name].js',
     publicPath: 'js/',
-    chunkFilename: '[name].[chunkhash:5].chunk.js',
+    chunkFilename: '[name].chunk.js',
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor'],
       filename: 'vendor.js',
       minChucks: Infinity,
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
     })
   ],
   module: {

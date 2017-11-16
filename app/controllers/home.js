@@ -6,7 +6,13 @@ let removeMd = require('remove-markdown');
 let homepageCount = 5;
 
 exports.index = function(req, res) {
-  res.sendFile(path.join(__dirname, "../../www/static/html/index.html"));
+  res.render('./index/index', {
+    vendor: req.vendor,
+    vendorTag: req.vendorTag,
+    bundle: req.bundle,
+    bundleTag: req.bundleTag,
+  });    
+  
 }
 
 exports.home = async function(req, res) {
